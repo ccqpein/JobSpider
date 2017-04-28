@@ -13,7 +13,6 @@ var BaseUrls = []string{
 }
 
 type TagStructures []string
-type FilterFunc func(*Selection, TagStructures, int) bool
 
 func GetSearchPages(baseUrls, keyWords []string) []*Document {
 	var results []*Document
@@ -35,19 +34,31 @@ func GetAllNodes(s *Document, tagStructures TagStructures) *Selection {
 	return temp
 }
 
-func DuringTheseDays(s *Selection, tagStructures TagStructures, less int) Bool {
-	date := s.Find(tagStructures[0]).Text()
-	date = Split(date, " ")
+/*
+func FilterSelectionsDate(s *Selection, days int) {
 
-	daysago, _ := strconv.Atoi(date)
+	s.FilterFunction(func(_ int, s *Selection) bool {
+		if day, _ := strconv.Atoi(Split(s.Find(".date").Text(), " ")[0]); day <= days {
+			return true
+		} else {
+			return false
+		}
+	}).Each(func(_ int, s *Selection) {
+		title := s.Find(".jobtitle").Text()
+		link, ok := s.Find(".jobtitle").Find("a").Attr("href")
+		Println(title)
+		Println(ok, link)
+	})
+}*/
 
-	if daysago <= less {
-		return true
-	}
-}
+func GetTitleAndLink(s *Selection) {
 
-func FilterSelections(s *Selection, f FilterFunc) []*Selection {
-
+	s.Each(func(_ int, s *Selection) {
+		title := s.Find(".jobtitle").Text()
+		link, ok := s.Find(".jobtitle").Find("a").Attr("href")
+		Println(title)
+		Println(ok, link)
+	})
 }
 
 func main() {
@@ -55,7 +66,8 @@ func main() {
 	testtagStrc := []string{".row.result"}
 
 	a := GetSearchPages(BaseUrls, testkeyW)
-	GetAllNodes(a[0], testtagStrc).Each(func(i int, s *Selection) {
-		Println(s.Text())
-	})
+
+	Println("haha")
+
+	FilterSelectionsDate(GetAllNodes(a[0], testtagStrc), 9)
 }
