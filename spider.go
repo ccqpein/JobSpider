@@ -34,6 +34,15 @@ func GetSearchPages(baseUrls, keyWords, location []string) []*Document {
 	return results
 }
 
+// start Concurrency
+func GetSearchPages(baseUrl, keyWord, location string) *Document {
+	doc, err := NewDocument(Sprintf(baseUrl, keyWord, location))
+	if err != nil {
+		log.Fatal(err)
+	}
+	return doc
+}
+
 func GetAllNodes(s *Document, tagStructures TagStructures) *Selection {
 	temp := s.Find(tagStructures[0])
 	for _, v := range tagStructures[1:] {
