@@ -18,8 +18,7 @@ var Location = []string{}
 
 type TagStructures []string
 
-func GetSearchPages(baseUrls, keyWords, location []string) []*Document {
-	var results []*Document
+func GetSearchPages(baseUrls, keyWords, location []string, a chan *Document) {
 	for _, url := range baseUrls {
 		for _, l := range location {
 			for _, w := range keyWords {
@@ -27,20 +26,11 @@ func GetSearchPages(baseUrls, keyWords, location []string) []*Document {
 				if err != nil {
 					log.Fatal(err)
 				}
-				results = append(results, doc)
+				a <- doc
 			}
 		}
 	}
-	return results
-}
-
-// start Concurrency
-func GetSearchPages(baseUrl, keyWord, location string) *Document {
-	doc, err := NewDocument(Sprintf(baseUrl, keyWord, location))
-	if err != nil {
-		log.Fatal(err)
-	}
-	return doc
+	close(a)
 }
 
 func GetAllNodes(s *Document, tagStructures TagStructures) *Selection {
@@ -66,9 +56,12 @@ func main() {
 	testtagStrc := []string{".row.result"}
 	testLocation := []string{"Washington%2C+DC", "Chicago%2C+IL", "Boston%2C+MA"}
 
-	a := GetSearchPages(BaseUrls, testkeyW, testLocation)
+	a := make(chan *Document)
 
-	for _, doc := range a {
+	go GetSearchPages(BaseUrls, testkeyW, testLocation, a)
+
+	for doc := range a {
+		Println("here")
 		GetTitleAndLink(GetAllNodes(doc, testtagStrc))
 	}
 }
