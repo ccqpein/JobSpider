@@ -4,8 +4,9 @@ import (
 	. "fmt"
 	. "github.com/PuerkitoBio/goquery"
 	"log"
-	//	"strconv"
-	//	. "strings"
+	//"reflect"
+	. "strconv"
+	. "strings"
 )
 
 var BaseUrls = []string{
@@ -43,25 +44,32 @@ func GetAllNodes(s *Document, tagStructures TagStructures) *Selection {
 
 func GetTitleAndLink(s *Selection) {
 	s.Each(func(_ int, s *Selection) {
-		title := s.Find(".jobtitle").Text()
-		if link, ok := s.Find(".jobtitle").Find("a").Attr("href"); ok {
-			Println(title)
-			Println("https://www.indeed.com" + link)
+		//Println(s.Find(".date").Text())
+		dateStr := Split(s.Find(".date").Text(), " ")
+		if len(dateStr) > 1 {
+			//Println(dateStr)
+			if i, err := Atoi(dateStr[0]); (i <= 3 && err == nil) || dateStr[1] == "minutes" || dateStr[1] == "hours" {
+				title := s.Find(".jobtitle").Text()
+				if link, ok := s.Find(".jobtitle").Find("a").Attr("href"); ok {
+					Println(title, dateStr)
+					Println("https://www.indeed.com" + link)
+				}
+			}
 		}
 	})
 }
 
 func main() {
-	testkeyW := []string{"haskell", "python", "golang", "lisp"}
+	testkeyW := []string{"clojure", "python", "golang", "lisp"}
 	testtagStrc := []string{".row.result"}
-	testLocation := []string{"Washington%2C+DC", "Chicago%2C+IL", "Boston%2C+MA"}
+	testLocation := []string{"Washington%2C+DC", "Chicago%2C+IL", "Boston%2C+MA", "Maryland", "Pennsylvania", "New+York+State"}
 
 	a := make(chan *Document)
 
 	go GetSearchPages(BaseUrls, testkeyW, testLocation, a)
 
 	for doc := range a {
-		Println("here")
 		GetTitleAndLink(GetAllNodes(doc, testtagStrc))
 	}
+
 }
