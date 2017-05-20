@@ -12,6 +12,8 @@ import (
 var tagStrc TagStructures = []string{".row.result"}
 var indeedBaseUrls string = "https://www.indeed.com/jobs?q=%[1]s&l=%[2]s"
 
+// location format is Washington%2C+DC
+
 func GetSearchPages(keyWords, location []string, a chan *Document) {
 	for _, l := range location {
 		for _, w := range keyWords {
