@@ -31,10 +31,14 @@ func getIndeedTitleAndLink(s *Selection) {
 	})
 }
 
-func IndeedFlow(keyWords, location []string, a chan *Document) {
-	go GetSearchPages(keyWords, location, indeedBaseUrls, a)
+func IndeedFlow(keyWords, location []string, flag chan bool) {
+	a := make(chan *Document)
+	go getSearchPages(keyWords, location, indeedBaseUrls, a)
 
 	for doc := range a {
-		getIndeedTitleAndLink(getAllNodes(doc))
+		getIndeedTitleAndLink(getAllNodes(doc, indeedTagStrc))
+		//Println(&*doc.Url)
 	}
+	//Println("finish indeed")
+	flag <- true
 }
