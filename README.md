@@ -1,8 +1,10 @@
 # README #
 
 ```shell
-go run ./spider.go
+go run ./main.go
 ```
 
-Remember to change key words in code.
+Remember to change key words or locations in main.go.
 
+[x] Indeed.com
+[x] Dice.com
