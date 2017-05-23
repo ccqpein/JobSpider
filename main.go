@@ -1,17 +1,16 @@
 package main
 
 import (
-	. "./Spiders"
-	//. "github.com/PuerkitoBio/goquery"
-	. "fmt"
+	. "JobSpider/Spiders"
+	//. "fmt"
 )
 
 func main() {
-	//testkeyW := []string{"clojure", "python", "golang", "lisp"}
-	//testLocation := []string{"Chicago%2C+IL", "Boston%2C+MA", "Maryland", "Pennsylvania", "New+York+State", "Ohio", "Illinois", "Indianapolis%2C+IN"}
+	testkeyW := []string{"clojure", "python", "golang", "lisp"}
+	testLocation := []string{"Chicago%2C+IL", "Boston%2C+MA", "Maryland", "Pennsylvania", "New+York+State", "Ohio", "Illinois", "Indianapolis%2C+IN"}
 
-	testLocation := []string{"Washington%2C+DC"}
-	testkeyW := []string{"clojure", "python"}
+	//testLocation := []string{"Washington%2C+DC"}
+	//testkeyW := []string{"clojure", "python"}
 
 	a := make(chan bool)
 	jobs := make(chan Job)
@@ -24,6 +23,7 @@ func main() {
 		select {
 		case job := <-jobs:
 			OpenJobPage(job)
+			//Println(job.Link)
 		case <-a:
 			finishP += 1
 		}

@@ -5,15 +5,18 @@ import (
 	. "github.com/PuerkitoBio/goquery"
 	"log"
 	//	. "strconv"
+	"os/exec"
 	//	. "strings"
 )
 
 type TagStructures []string
 type Job struct {
-	title string
-	link  string
-	date  []string
+	Title string
+	Link  string
+	Date  []string
 }
+
+var cmd *exec.Cmd = exec.Command("open", "-a", "Safari")
 
 func getSearchPages(keyWords, location []string, baseUrls string, a chan *Document) {
 	for _, l := range location {
@@ -39,5 +42,8 @@ func getAllNodes(s *Document, tagStrc TagStructures) *Selection {
 }
 
 func OpenJobPage(job Job) {
-
+	err := exec.Command("open", job.Link).Start()
+	if err != nil {
+		log.Fatal(err)
+	}
 }

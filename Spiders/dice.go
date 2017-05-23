@@ -24,7 +24,7 @@ func getDiceTitleAndLink(s *Selection) []Job {
 				title, _ := s.Find(".list-inline").Find("a").Attr("title")
 				if link, ok := s.Find(".list-inline").Find("a").Attr("href"); ok {
 					Println("\n", title, dateStr, "\n", link)
-					jobs = append(jobs, Job{title: title, link: link, date: dateStr})
+					jobs = append(jobs, Job{Title: title, Link: link, Date: dateStr})
 				}
 			}
 		}

@@ -26,7 +26,7 @@ func getIndeedTitleAndLink(s *Selection) []Job {
 				if link, ok := s.Find(".jobtitle").Find("a").Attr("href"); ok {
 					Println(title, dateStr)
 					Println("https://www.indeed.com" + link)
-					jobs = append(jobs, Job{title: title, link: "https://www.indeed.com" + link, date: dateStr})
+					jobs = append(jobs, Job{Title: title, Link: "https://www.indeed.com" + link, Date: dateStr})
 				}
 			}
 		}
