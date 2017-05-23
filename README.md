@@ -6,5 +6,7 @@ go run ./main.go
 
 Remember to change key words or locations in main.go.
 
-[x] Indeed.com
-[x] Dice.com
+- [x] Indeed.com
+- [x] Dice.com
+
+

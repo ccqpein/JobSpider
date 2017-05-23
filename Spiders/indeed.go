@@ -14,31 +14,38 @@ var indeedBaseUrls string = "https://www.indeed.com/jobs?q=%[1]s&l=%[2]s"
 
 // location format is Washington%2C+DC
 
-func getIndeedTitleAndLink(s *Selection) {
+func getIndeedTitleAndLink(s *Selection) []Job {
+	var jobs []Job
 	s.Each(func(_ int, s *Selection) {
 		//Println(s.Find(".date").Text())
 		dateStr := Split(s.Find(".date").Text(), " ")
 		if len(dateStr) > 1 {
 			//Println(dateStr)
-			if i, err := Atoi(dateStr[0]); (i < 3 && err == nil) || dateStr[1] == "minutes" || dateStr[1] == "hours" {
+			if i, err := Atoi(dateStr[0]); (i < 1 && err == nil) || dateStr[1] == "minutes" || dateStr[1] == "hours" {
 				title := s.Find(".jobtitle").Text()
 				if link, ok := s.Find(".jobtitle").Find("a").Attr("href"); ok {
 					Println(title, dateStr)
 					Println("https://www.indeed.com" + link)
+					jobs = append(jobs, Job{title: title, link: "https://www.indeed.com" + link, date: dateStr})
 				}
 			}
 		}
 	})
+	return jobs
 }
 
-func IndeedFlow(keyWords, location []string, flag chan bool) {
+func IndeedFlow(keyWords, location []string, flag chan bool, jobs chan Job) {
 	a := make(chan *Document)
+
 	go getSearchPages(keyWords, location, indeedBaseUrls, a)
 
 	for doc := range a {
-		getIndeedTitleAndLink(getAllNodes(doc, indeedTagStrc))
+		for _, job := range getIndeedTitleAndLink(getAllNodes(doc, indeedTagStrc)) {
+			jobs <- job
+		}
 		//Println(&*doc.Url)
 	}
-	//Println("finish indeed")
+	Println("finish indeed")
+
 	flag <- true
 }

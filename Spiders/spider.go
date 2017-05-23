@@ -9,11 +9,16 @@ import (
 )
 
 type TagStructures []string
+type Job struct {
+	title string
+	link  string
+	date  []string
+}
 
 func getSearchPages(keyWords, location []string, baseUrls string, a chan *Document) {
 	for _, l := range location {
 		for _, w := range keyWords {
-			//Println(Sprintf(baseUrls, w, l))
+			//Println(w, l)
 			doc, err := NewDocument(Sprintf(baseUrls, w, l))
 			if err != nil {
 				log.Fatal(err)
@@ -22,7 +27,6 @@ func getSearchPages(keyWords, location []string, baseUrls string, a chan *Docume
 			a <- doc
 		}
 	}
-
 	close(a)
 }
 
@@ -32,4 +36,8 @@ func getAllNodes(s *Document, tagStrc TagStructures) *Selection {
 		temp = temp.Find(v)
 	}
 	return temp
+}
+
+func OpenJobPage(job Job) {
+
 }
