@@ -2,6 +2,7 @@ package main
 
 import (
 	. "JobSpider/Spiders"
+	"os"
 	//. "fmt"
 )
 
@@ -12,6 +13,7 @@ func main() {
 	//testLocation := []string{"Washington%2C+DC"}
 	//testkeyW := []string{"clojure", "python"}
 
+	args := os.Args
 	a := make(chan bool)
 	jobs := make(chan Job)
 
@@ -22,7 +24,9 @@ func main() {
 	for {
 		select {
 		case job := <-jobs:
-			OpenJobPage(job)
+			if len(args) > 1 && args[1] == "open" {
+				OpenJobPage(job)
+			}
 			//Println(job.Link)
 		case <-a:
 			finishP += 1
