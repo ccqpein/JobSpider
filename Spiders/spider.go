@@ -47,3 +47,7 @@ func OpenJobPage(job Job) {
 		log.Fatal(err)
 	}
 }
+
+func FilterJobTitle(job Job) Bool {
+	return false
+}
