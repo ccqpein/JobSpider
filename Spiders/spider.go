@@ -6,7 +6,7 @@ import (
 	"log"
 	//	. "strconv"
 	"os/exec"
-	//	. "strings"
+	//. "strings"
 )
 
 type TagStructures []string
@@ -48,6 +48,9 @@ func OpenJobPage(job Job) {
 	}
 }
 
-func FilterJobTitle(job Job) Bool {
+/*
+func FilterJobTitle(job Job, exceptWords *[]string) bool {
+	titleWords := Split(job.Title, " ")
 	return false
 }
+*/
