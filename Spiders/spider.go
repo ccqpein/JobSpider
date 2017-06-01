@@ -4,7 +4,7 @@ import (
 	. "fmt"
 	. "github.com/PuerkitoBio/goquery"
 	"log"
-	//	. "strconv"
+	//. "strconv"
 	"os/exec"
 	//. "strings"
 )
@@ -12,8 +12,10 @@ import (
 type TagStructures []string
 type Job struct {
 	Title string
-	Link  string
-	Date  []string
+	//Keyword  string
+	//Location string
+	Link string
+	Date []string
 }
 
 var cmd *exec.Cmd = exec.Command("open", "-a", "Safari")
