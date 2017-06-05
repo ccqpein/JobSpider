@@ -43,7 +43,7 @@ func DiceFlow(keyWords, location []string, flag chan bool, jobs chan Job) {
 		}
 		//Println(&*doc.Url)
 	}
-	Println("finish Dice")
+	//Println("finish Dice")
 
 	flag <- true
 

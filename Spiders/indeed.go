@@ -45,7 +45,7 @@ func IndeedFlow(keyWords, location []string, flag chan bool, jobs chan Job) {
 		}
 		//Println(&*doc.Url)
 	}
-	Println("finish indeed")
+	//Println("finish indeed")
 
 	flag <- true
 }
