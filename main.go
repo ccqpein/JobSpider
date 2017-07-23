@@ -8,14 +8,14 @@ import (
 
 func main() {
 	testkeyW := []string{"clojure", "python", "golang", "lisp"}
-	testLocation := []string{"Chicago%2C+IL", "Boston%2C+MA", "Maryland", "Pennsylvania", "New+York+State", "Ohio", "Illinois", "Indianapolis%2C+IN"}
+	testLocation := []string{"Chicago%2C+IL", "Boston%2C+MA", "Maryland", "Pennsylvania", "New+York+State", "Ohio", "Illinois", "Indianapolis%2C+IN", "North+Carolina"}
 
 	//testLocation := []string{"Washington%2C+DC"}
 	//testkeyW := []string{"clojure", "python"}
 
 	args := os.Args
 	a := make(chan bool)
-	jobs := make(chan Job)
+	jobs := make(chan Job) // can use buffer channel
 
 	go IndeedFlow(testkeyW, testLocation, a, jobs)
 	go DiceFlow(testkeyW, testLocation, a, jobs)

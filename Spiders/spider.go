@@ -2,8 +2,9 @@ package Spiders
 
 import (
 	. "fmt"
-	. "github.com/PuerkitoBio/goquery"
 	"log"
+
+	. "github.com/PuerkitoBio/goquery"
 	//. "strconv"
 	"os/exec"
 	//. "strings"
@@ -18,7 +19,7 @@ type Job struct {
 	Date []string
 }
 
-var cmd *exec.Cmd = exec.Command("open", "-a", "Safari")
+//var cmd *exec.Cmd = exec.Command("open", "-a", "Safari") // open urls with safari
 
 func getSearchPages(keyWords, location []string, baseUrls string, a chan *Document) {
 	for _, l := range location {

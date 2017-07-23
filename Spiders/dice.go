@@ -2,6 +2,7 @@ package Spiders
 
 import (
 	. "fmt"
+
 	. "github.com/PuerkitoBio/goquery"
 	//	"log"
 	. "strconv"
@@ -12,6 +13,7 @@ var diceTagStrc TagStructures = []string{".complete-serp-result-div"}
 var diceBaseUrls string = "https://www.dice.com/jobs/sort-date-jobs-q-%[1]s-l-%[2]s-jobs"
 
 // location format is Chicago%2C_IL. Chicago%2C+IL is fine too
+// thanks for REST api
 
 func getDiceTitleAndLink(s *Selection) []Job {
 	var jobs []Job
